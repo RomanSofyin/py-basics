@@ -22,13 +22,13 @@ with open(r"./dataset_24476_4.txt", encoding='utf-8') as in_f:
         r = requests.get(f"https://api.artsy.net/api/artists/{artist_id.strip()}", headers=headers)  # инициируем запрос с заголовком
         r.encoding = 'utf-8'
         j = json.loads(r.text)  # разбираем ответ сервера
-        artist_list.append((j['sortable_name'], j['birthday']))
+        artist_list.append((j['sortable_name'], int(j['birthday'])))
 
 sorted_list = sorted(artist_list, key=lambda x: (x[1], x[0]))
 
 with open(r"./dataset_24476_4_res.txt", "w", encoding='utf-8') as out_f:
     #for t in sorted_list:
-    out_data = '\n'.join(str(e[0]) + "\t-\t" + str(e[1]) for e in sorted_list)
+    out_data = '\n'.join(str(e[0]) for e in sorted_list)
     out_f.write(out_data)
 
 print(sorted_list)
